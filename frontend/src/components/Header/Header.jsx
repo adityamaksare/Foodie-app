@@ -10,7 +10,6 @@ const Header = () => {
           Get ready to satisfy your cravings. We bring the best local food right
           to your doorstep!
         </p>
-        <button>View Menu</button>
       </div>
     </div>
   );

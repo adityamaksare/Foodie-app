@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MERN Food Delivery App - Index</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #e74c3c;
+      }
+      .section {
+        margin-bottom: 30px;
+      }
+      .component {
+        margin-left: 20px;
+        margin-bottom: 10px;
+      }
+      code {
+        background: #f4f4f4;
+        padding: 2px 5px;
+        border-radius: 3px;
+      }
+      .folder {
+        font-weight: bold;
+      }
+      .file {
+        margin-left: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>MERN Food Delivery Application Index</h1>
+
+    <div class="section">
+      <h2>Overview</h2>
+      <p>
+        This is a full-stack food ordering web application built using the MERN
+        stack (MongoDB, Express, React, Node.js). The application consists of
+        three main parts:
+      </p>
+      <ul>
+        <li>Frontend: Customer-facing app for ordering food</li>
+        <li>Backend: API server handling data and business logic</li>
+        <li>
+          Admin Panel: Interface for managing orders, menu items, and more
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>1. Backend Structure</h2>
+
+      <h3>Main Components</h3>
+      <div class="component">
+        <p>
+          <code>server.js</code>: Entry point that sets up Express server,
+          connects to MongoDB, and defines API routes
+        </p>
+
+        <h4>Models</h4>
+        <ul>
+          <li><code>foodModel.js</code>: Schema for food items</li>
+          <li><code>userModel.js</code>: Schema for user accounts</li>
+          <li><code>orderModel.js</code>: Schema for customer orders</li>
+        </ul>
+
+        <h4>Controllers</h4>
+        <ul>
+          <li>
+            <code>foodController.js</code>: Handlers for food-related operations
+          </li>
+          <li>
+            <code>userController.js</code>: Handlers for user authentication and
+            profile management
+          </li>
+          <li>
+            <code>cartController.js</code>: Handlers for shopping cart
+            operations
+          </li>
+          <li>
+            <code>orderController.js</code>: Handlers for order processing
+            including payment integration
+          </li>
+        </ul>
+
+        <h4>Routes</h4>
+        <ul>
+          <li><code>foodRoute.js</code>: API endpoints for food items</li>
+          <li><code>userRoute.js</code>: API endpoints for user operations</li>
+          <li><code>cartRoute.js</code>: API endpoints for cart management</li>
+          <li><code>orderRoute.js</code>: API endpoints for order handling</li>
+        </ul>
+      </div>
+
+      <h3>API Endpoints</h3>
+      <table>
+        <tr>
+          <th>Route</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td><code>/api/food</code></td>
+          <td>Food item CRUD operations</td>
+        </tr>
+        <tr>
+          <td><code>/api/user</code></td>
+          <td>User registration, login, profile management</td>
+        </tr>
+        <tr>
+          <td><code>/api/cart</code></td>
+          <td>Shopping cart operations</td>
+        </tr>
+        <tr>
+          <td><code>/api/order</code></td>
+          <td>Order processing and payment</td>
+        </tr>
+        <tr>
+          <td><code>/images</code></td>
+          <td>Static file serving for uploaded images</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>2. Frontend Structure</h2>
+
+      <h3>Main Pages</h3>
+      <div class="component">
+        <ul>
+          <li><code>Home</code>: Landing page with food listings</li>
+          <li><code>Cart</code>: Shopping cart management</li>
+          <li><code>PlaceOrder</code>: Checkout and payment processing</li>
+          <li><code>MyOrders</code>: Order history and tracking</li>
+          <li><code>Verify</code>: Authentication related pages</li>
+        </ul>
+      </div>
+
+      <h3>Key Features</h3>
+      <div class="component">
+        <ul>
+          <li>User authentication (login/register)</li>
+          <li>Browse food catalog</li>
+          <li>Add items to cart</li>
+          <li>Checkout with Stripe payment integration</li>
+          <li>Order tracking</li>
+          <li>Responsive design</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. Admin Panel Structure</h2>
+
+      <h3>Main Pages</h3>
+      <div class="component">
+        <ul>
+          <li><code>Add</code>: Add new food items to the menu</li>
+          <li><code>List</code>: View and manage existing food items</li>
+          <li><code>Orders</code>: Track and manage customer orders</li>
+        </ul>
+      </div>
+
+      <h3>Key Features</h3>
+      <div class="component">
+        <ul>
+          <li>Food item management (CRUD operations)</li>
+          <li>Order processing workflow</li>
+          <li>Order status updates</li>
+          <li>Admin authentication</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4. Technology Stack</h2>
+
+      <table>
+        <tr>
+          <th>Component</th>
+          <th>Technologies</th>
+        </tr>
+        <tr>
+          <td>Frontend</td>
+          <td>React.js, React Router, Context API, Vite</td>
+        </tr>
+        <tr>
+          <td>Backend</td>
+          <td>Node.js, Express.js, MongoDB, Mongoose</td>
+        </tr>
+        <tr>
+          <td>Authentication</td>
+          <td>JWT (JSON Web Tokens)</td>
+        </tr>
+        <tr>
+          <td>Payment Processing</td>
+          <td>Stripe</td>
+        </tr>
+        <tr>
+          <td>Styling</td>
+          <td>CSS</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>5. Running the Application</h2>
+
+      <h3>Backend</h3>
+      <div class="component">
+        <code>cd backend && npm install && npm run server</code>
+        <p>Runs on: <code>http://localhost:4000</code></p>
+      </div>
+
+      <h3>Frontend</h3>
+      <div class="component">
+        <code>cd frontend && npm install && npm run dev</code>
+        <p>Runs on: <code>http://localhost:5173</code></p>
+      </div>
+
+      <h3>Admin Panel</h3>
+      <div class="component">
+        <code>cd admin && npm install && npm run dev</code>
+        <p>Runs on: <code>http://localhost:5174</code></p>
+      </div>
+    </div>
+  </body>
+</html>

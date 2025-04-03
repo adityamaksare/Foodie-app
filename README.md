@@ -1,142 +1,212 @@
-# Food Ordering Web App (MERN Stack)
+# Foodie - Food Delivery App
 
-## Table of Contents
-- [Introduction](#introduction)
+A modern MERN stack food delivery application with a responsive design, easy ordering system, and user-friendly interface.
+
+![Foodie App](https://via.placeholder.com/800x400?text=Foodie+App)
+
+## 📋 Table of Contents
 - [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Screenshots](#screenshots)
-- [API Documentation](#api-documentation)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Setup Instructions](#setup-instructions)
+  - [Prerequisites](#prerequisites)
+  - [Backend Setup](#backend-setup)
+  - [Frontend Setup](#frontend-setup)
+  - [Admin Panel Setup](#admin-panel-setup)
+- [Running the Application](#running-the-application)
+- [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
-- [Contact](#contact)
+- [License](#license)
 
-## Introduction
-This is a full-stack food ordering web application built using the MERN stack (MongoDB, Express, React, Node.js). The application consists of a customer-facing app for ordering food and an admin app for managing orders, menu items, and more.
+## ✨ Features
 
-## Features
-- User authentication and authorization
-- Browse food items
-- Add items to the cart and place orders
-- Stripe Payment Integration: Secure and reliable payment processing using Stripe.
-- Order tracking
-- Admin panel to manage menu items, orders
+- **User Authentication**: Secure signup and login
+- **Food Catalog**: Browse through various food categories
+- **Cart Management**: Add, remove, and update food items in cart
+- **Order Tracking**: Track your orders in real-time
+- **Payment Integration**: Seamless payment processing
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **Admin Dashboard**: Manage food items, orders, and users
 
-## Technologies Used
-- **Frontend:** React.js, React Context API, React Router
-- **Backend:** Node.js, Express.js
-- **Payment Gateway:** Stripe
-- **Database:** MongoDB
-- **Authentication:** JWT (JSON Web Tokens)
-- **Styling:** CSS
+## 🛠️ Tech Stack
 
-## Installation
+- **Frontend**: React.js, CSS3, HTML5
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **Authentication**: JWT (JSON Web Tokens)
+- **Payment**: Stripe integration
+- **Deployment**: (Specify your deployment platform)
+
+## 📁 Project Structure
+
+The project is organized into three main directories:
+
+```
+mern-food-delivery-app/
+├── frontend/        # React frontend application
+├── backend/         # Node.js + Express backend API
+└── admin/           # Admin panel (React)
+```
+
+## 🚀 Setup Instructions
+
 ### Prerequisites
-- Node.js
-- MongoDB
 
-### Clone the Repository
-```sh
-git clone https://github.com/DulanjaliSenarathna/mern-food-delivery-app.git
-cd mern-food-delivery-app
-```
+- Node.js (v14 or later)
+- npm or yarn
+- MongoDB (local or Atlas)
+- Git
 
-## Backend Setup
-Navigate to the backend directory:
+### Backend Setup
 
-```sh
-cd backend
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/mern-food-delivery-app.git
+   cd mern-food-delivery-app
+   ```
 
-```
-Install dependencies:
+2. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
 
-```sh
-npm install
-```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Create a .env file in the backend directory and add the following:
+4. Create a `.env` file in the backend directory with the following variables:
+   ```
+   PORT=5000
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   STRIPE_SECRET_KEY=your_stripe_secret_key
+   ```
 
-```sh
-JWT_SECRET="random#secret"
-STRIPE_SECRET_KEY="sk_test_51JhWAiRXoTvIuM91beRv8XldfL3GGKyuLhzabkSwNeIXryY51G9UKnwNUFcotg0N6k4UAGhiprjJd4XhAF85JCN4004TC42zkl"
-```
+5. Seed the database (if provided):
+   ```bash
+   npm run seed
+   ```
 
-Start the backend server:
+### Frontend Setup
 
-```sh
-npm run server
-```
-## Frontend Setup
-Navigate to the frontend directory:
+1. Navigate to the frontend directory:
+   ```bash
+   cd ../frontend
+   ```
 
-```sh
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-cd frontend
-```
+3. Create a `.env` file in the frontend directory (if needed):
+   ```
+   REACT_APP_API_URL=http://localhost:5000/api
+   REACT_APP_STRIPE_PUBLIC_KEY=your_stripe_public_key
+   ```
 
-Install dependencies:
-```sh
+### Admin Panel Setup
 
-npm install
-```
+1. Navigate to the admin directory:
+   ```bash
+   cd ../admin
+   ```
 
-Start the frontend server:
-```sh
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-npm run dev
-```
+3. Create a `.env` file in the admin directory (if needed):
+   ```
+   REACT_APP_API_URL=http://localhost:5000/api
+   ```
 
-## Admin App Setup
+## 🖥️ Running the Application
 
-Navigate to the admin directory:
-```sh
+### Development Mode
 
-cd admin
-```
+1. Start the backend server:
+   ```bash
+   # In the backend directory
+   npm run dev
+   ```
 
-Install dependencies:
+2. Start the frontend application:
+   ```bash
+   # In the frontend directory
+   npm start
+   ```
 
-```sh
-npm install
-```
+3. Start the admin panel:
+   ```bash
+   # In the admin directory
+   npm start
+   ```
 
-Start the admin app :
-```sh
-npm run dev
-```
+The frontend application will run on http://localhost:3000
+The admin panel will run on http://localhost:3001
+The backend server will run on http://localhost:5000
 
-## Usage
-Access the customer-facing app at http://localhost:5173.
-Access the admin app at http://localhost:5174.
-Register as a new user or log in with existing credentials.
-Browse the menu, add items to the cart, and place an order.
-Pay using dummy visa card
-Use the admin panel to manage orders, menu items.
+### Production Mode
 
-## Screenshots
-![1](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/b3d604f0-ae0e-4e29-9b95-51f6327c3952)
-![2](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/0cb56d94-a715-48bd-9a7d-05c876a05b2c)
-![3](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/f5dd216a-dc8d-4042-9a96-4884cdb17aef)
-![Capture2](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/22fc6a58-b713-4ab7-babb-cff5844e7c55)
-![Capture3](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/0f7fe1ab-8c29-4fa2-bdb2-7212994cdf80)
-![Capture4](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/f41881c6-e148-4215-9953-458bbe602007)
-![Capture5](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/34e366fa-8ee5-4f77-a5e0-d5d4ea294672)
-![Capture6](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/1894f642-ea89-42de-ad74-de173c6c42aa)
-![Capture7](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/1a94b8aa-aa4e-4991-9d45-f6548f793b47)
-![Capture8](https://github.com/DulanjaliSenarathna/mern-food-delivery-app/assets/59603716/c85e4c11-7ebf-4e45-8678-4000abde835d)
+1. Build the frontend:
+   ```bash
+   # In the frontend directory
+   npm run build
+   ```
 
-## API Documentation
-The API endpoints for the backend can be documented using tools like Postman or Swagger. Include endpoints for user authentication, menu items, orders, and more.
+2. Build the admin panel:
+   ```bash
+   # In the admin directory
+   npm run build
+   ```
 
-## Contributing
-Contributions are welcome! Please fork the repository and create a pull request with your changes. Make sure to follow the code style and include relevant tests.
+3. Start the production server:
+   ```bash
+   # In the backend directory
+   npm start
+   ```
 
-## Contact
-For any questions or suggestions, feel free to contact me.
+## 📡 API Endpoints
 
-Happy coding!
+### Authentication
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Login a user
+- `GET /api/auth/me` - Get current user details
 
-Feel free to customize this template according to your specific project details and requirements.
+### Food Items
+- `GET /api/food` - Get all food items
+- `GET /api/food/:id` - Get a specific food item
+- `GET /api/food/category/:category` - Get food items by category
+
+### Cart
+- `POST /api/cart/add` - Add item to cart
+- `PUT /api/cart/update` - Update cart item
+- `DELETE /api/cart/remove/:id` - Remove item from cart
+- `GET /api/cart` - Get user's cart
+
+### Orders
+- `POST /api/order/place` - Place a new order
+- `GET /api/order/userorders` - Get user's orders
+- `GET /api/order/:id` - Get a specific order
+
+## 👥 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+Made with ❤️ by [Your Name]
 
 
 

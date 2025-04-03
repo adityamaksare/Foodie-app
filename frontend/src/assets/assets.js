@@ -82,7 +82,6 @@ export const assets = {
     bag_icon,
     parcel_icon,
     footer_logo,
-    food_1
 }
 
 export const menu_list = [
@@ -122,7 +121,7 @@ export const menu_list = [
 export const food_list = [
     {
         _id: "1",
-        name: "Greek salad",
+        name: "Greek salad 2",
         image: food_1,
         price: 12,
         description: "Food provides essential nutrients for overall health and well-being",

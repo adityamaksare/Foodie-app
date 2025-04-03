@@ -23,3 +23,355 @@
 .app-download-platforms img:hover{
     transform: scale(1.05);
 }
+
+.app-download-section {
+  margin: 100px 0;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #f8f9fb 100%);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.app-download-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.app-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.app-text h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.app-description {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #666;
+  margin-bottom: 32px;
+}
+
+.app-features {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255, 99, 71, 0.1);
+  border-radius: 12px;
+  color: var(--primary-color);
+}
+
+.feature-text h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  margin: 0 0 4px 0;
+}
+
+.feature-text p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.download-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.store-button {
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.store-button img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.store-button:hover {
+  transform: translateY(-5px);
+}
+
+.app-ratings {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.rating-text {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Phone Mockup */
+.app-mockup {
+  flex: 1;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-outline {
+  width: 280px;
+  height: 580px;
+  background-color: #111;
+  border-radius: 40px;
+  padding: 10px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+  transform: rotate(-5deg);
+  border: 8px solid #2d2d2d;
+}
+
+.phone-outline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 30px;
+  background-color: #111;
+  border-radius: 0 0 20px 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mockup-content {
+  padding: 40px 20px 20px;
+}
+
+.mockup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.mockup-logo {
+  width: 100px;
+  height: 24px;
+  background: linear-gradient(90deg, var(--primary-color) 0%, #ff8f72 100%);
+  border-radius: 12px;
+}
+
+.mockup-user {
+  width: 32px;
+  height: 32px;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+}
+
+.mockup-food-item {
+  height: 120px;
+  background-color: #f8f8f8;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.mockup-food-item::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #eaeaea;
+  border-radius: 10px;
+}
+
+.mockup-food-item::before {
+  content: "";
+  position: absolute;
+  left: 100px;
+  top: 20px;
+  width: 120px;
+  height: 16px;
+  background-color: #eaeaea;
+  border-radius: 8px;
+}
+
+.mockup-cart-button {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #ff7854 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 15px -3px rgba(255, 99, 71, 0.3);
+}
+
+.mockup-cart-button::after {
+  content: "";
+  width: 24px;
+  height: 4px;
+  background-color: white;
+  position: absolute;
+}
+
+.mockup-cart-button::before {
+  content: "";
+  width: 4px;
+  height: 24px;
+  background-color: white;
+  position: absolute;
+}
+
+@media (max-width: 992px) {
+  .app-download-container {
+    flex-direction: column;
+  }
+  
+  .app-content {
+    max-width: 100%;
+    text-align: center;
+  }
+  
+  .feature-item {
+    justify-content: center;
+  }
+  
+  .download-buttons {
+    justify-content: center;
+  }
+  
+  .app-ratings {
+    justify-content: center;
+  }
+  
+  .app-mockup {
+    margin-top: 40px;
+  }
+  
+  .phone-outline {
+    transform: rotate(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .app-download-section {
+    padding: 40px 20px;
+    margin: 60px 0;
+  }
+  
+  .app-text h2 {
+    font-size: 28px;
+  }
+  
+  .app-description {
+    font-size: 16px;
+  }
+  
+  .feature-item {
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .download-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .phone-outline {
+    width: 240px;
+    height: 500px;
+  }
+  
+  .feature-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .feature-icon {
+    margin: 0 auto;
+  }
+}
+
+/* Animation for the phone mockup */
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+}
+
+.phone-outline {
+  animation: float 6s ease-in-out infinite;
+}
+
+@media (max-width: 992px) {
+  .phone-outline {
+    animation: float 6s ease-in-out infinite;
+    animation-name: floatResponsive;
+  }
+}
+
+@keyframes floatResponsive {
+  0% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
