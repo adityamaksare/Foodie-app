@@ -74,7 +74,7 @@ const Cart = () => {
                         <p className="item-category">{item.category}</p>
                       </div>
                     </div>
-                    <div className="item-price">${item.price.toFixed(2)}</div>
+                    <div className="item-price">₹{item.price.toFixed(2)}</div>
                     <div className="item-quantity">
                       <button
                         className="quantity-btn"
@@ -91,7 +91,7 @@ const Cart = () => {
                       </button>
                     </div>
                     <div className="item-total">
-                      ${(item.price * cartItems[item._id]).toFixed(2)}
+                      ₹{(item.price * cartItems[item._id]).toFixed(2)}
                     </div>
                     <button
                       className="remove-item"
@@ -125,11 +125,11 @@ const Cart = () => {
             <div className="summary-details">
               <div className="summary-row">
                 <span>Subtotal</span>
-                <span>${getTotalCartAmount().toFixed(2)}</span>
+                <span>₹{getTotalCartAmount().toFixed(2)}</span>
               </div>
               <div className="summary-row">
                 <span>Shipping</span>
-                <span>${(2.0).toFixed(2)}</span>
+                <span>₹{(2.0).toFixed(2)}</span>
               </div>
               {/* Uncomment to add tax row
               <div className="summary-row">
@@ -139,7 +139,7 @@ const Cart = () => {
               */}
               <div className="summary-row total">
                 <span>Total</span>
-                <span>${(getTotalCartAmount() + 2).toFixed(2)}</span>
+                <span>₹{(getTotalCartAmount() + 2).toFixed(2)}</span>
               </div>
             </div>
             <button className="checkout-btn" onClick={() => navigate("/order")}>

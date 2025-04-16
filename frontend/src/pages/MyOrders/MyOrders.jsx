@@ -9,6 +9,7 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("all");
+  const [cancellingOrder, setCancellingOrder] = useState(null);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -31,6 +32,48 @@ const MyOrders = () => {
       fetchOrders();
     }
   }, [token]);
+
+  const handleCancelOrder = async (orderId) => {
+    if (!orderId) return;
+    
+    setCancellingOrder(orderId);
+    try {
+      console.log('Cancelling order:', orderId);
+      console.log('Request URL:', url + "/api/order/cancel");
+      console.log('Token:', token);
+      
+      const response = await axios.post(
+        url + "/api/order/cancel",
+        { orderId },
+        { 
+          headers: { 
+            token,
+            'Content-Type': 'application/json'
+          } 
+        }
+      );
+      
+      console.log('Cancel response:', response.data);
+      
+      if (response.data.success) {
+        // Update the order status in the local state
+        setOrders(orders.map(order => 
+          order._id === orderId 
+            ? { ...order, status: "cancelled" } 
+            : order
+        ));
+        alert("Order cancelled successfully");
+      } else {
+        alert(response.data.message || "Failed to cancel order");
+      }
+    } catch (error) {
+      console.error("Error cancelling order:", error);
+      console.error("Error response:", error.response?.data);
+      alert(error.response?.data?.message || "An error occurred while cancelling the order");
+    } finally {
+      setCancellingOrder(null);
+    }
+  };
 
   // Get filtered orders based on status
   const getFilteredOrders = () => {
@@ -276,30 +319,16 @@ const MyOrders = () => {
                   </div>
 
                   <div className="order-actions">
-                    <button className="view-details-btn">View Details</button>
-                    {order.status.toLowerCase() !== "delivered" &&
-                      order.status.toLowerCase() !== "cancelled" && (
-                        <button
-                          className="track-order-btn"
-                          onClick={fetchOrders}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                          </svg>
-                          Track Order
-                        </button>
-                      )}
+                    {order.status.toLowerCase() !== "cancelled" && 
+                     order.status.toLowerCase() !== "delivered" && (
+                      <button 
+                        className="cancel-order-btn"
+                        onClick={() => handleCancelOrder(order._id)}
+                        disabled={cancellingOrder === order._id}
+                      >
+                        {cancellingOrder === order._id ? "Cancelling..." : "Cancel Order"}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

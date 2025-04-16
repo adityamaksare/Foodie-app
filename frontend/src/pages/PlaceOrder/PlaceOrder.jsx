@@ -3,9 +3,14 @@ import "./PlaceOrder.css";
 import { StoreContext } from "../../components/context/StoreContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+// Import payment logos
+// Payment logo URLs
+const googlePayLogo = "https://www.gstatic.com/instantbuy/svg/dark_gpay.svg";
+const phonePeLogo = "https://cdn.phonepe.com/static/phonepe-logo.svg";
+const paytmLogo = "https://cdn.paytm.com/images/catalog/product/M/MO/MO-PAYTM-PAYTM/Paytm-Logo-1.jpg";
 
 const PlaceOrder = () => {
-  const { getTotalCartAmount, token, food_list, cartItems, url } =
+  const { getTotalCartAmount, token, food_list, cartItems, url, setCartItems } =
     useContext(StoreContext);
 
   const [data, setData] = useState({
@@ -22,6 +27,9 @@ const PlaceOrder = () => {
 
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("cod");
+  const [orderSuccess, setOrderSuccess] = useState(false);
+  const [orderId, setOrderId] = useState('');
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -44,9 +52,11 @@ const PlaceOrder = () => {
     });
 
     let orderData = {
+      userId: token,
       address: data,
       items: orderItems,
       amount: getTotalCartAmount() + 2,
+      paymentMethod: paymentMethod
     };
 
     try {
@@ -54,14 +64,18 @@ const PlaceOrder = () => {
         headers: { token },
       });
       if (response.data.success) {
-        const { session_url } = response.data;
-        window.location.replace(session_url);
+        const orderId = response.data.orderId;
+        setOrderSuccess(true);
+        setOrderId(orderId);
+        setCartItems({});
+        navigate("/myorders");
       } else {
-        alert("Error processing your order. Please try again.");
+        alert(response.data.message || "Error processing your order. Please try again.");
       }
     } catch (error) {
       console.error("Order placement error:", error);
-      alert("An error occurred. Please try again later.");
+      const errorMessage = error.response?.data?.message || "An error occurred. Please try again later.";
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -110,6 +124,114 @@ const PlaceOrder = () => {
   const additionalItems =
     food_list.filter((item) => cartItems[item._id] > 0).length -
     orderSummaryItems.length;
+
+  const PaymentSection = () => {
+    const [selectedUPI, setSelectedUPI] = useState('');
+    const [showQR, setShowQR] = useState(false);
+
+    const handleUPISelection = (value) => {
+      setSelectedUPI(value);
+      setShowQR(true);
+      setPaymentMethod('upi');
+    };
+
+    const handlePaymentComplete = () => {
+      setShowQR(false);
+    };
+
+    if (showQR) {
+      return (
+        <div className="payment-section">
+          <h3>Complete Payment</h3>
+          <div className="qr-code-section">
+            <div className="qr-code-container">
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=merchant@upi&pn=FoodStore&am=${getTotalCartAmount() + 2}&cu=INR`} 
+                alt="Payment QR Code" 
+                className="qr-code"
+              />
+            </div>
+            <div className="payment-instructions">
+              <p>1. Open {selectedUPI} app on your phone</p>
+              <p>2. Scan this QR code to pay</p>
+              <p>3. Complete the payment of ₹{(getTotalCartAmount() + 2).toFixed(2)}</p>
+              <p>4. Click on 'Complete Payment' after successful payment</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="payment-section">
+        <h3>Payment Method</h3>
+        <div className="payment-options">
+          <div className="payment-option">
+            <input
+              type="radio"
+              id="cod"
+              name="payment"
+              value="cod"
+              checked={paymentMethod === "cod"}
+              onChange={() => setPaymentMethod("cod")}
+            />
+            <label htmlFor="cod">Cash on Delivery</label>
+          </div>
+          <div className="payment-option">
+            <input
+              type="radio"
+              id="upi"
+              name="payment"
+              value="upi"
+              checked={paymentMethod === "upi"}
+              onChange={() => setPaymentMethod("upi")}
+            />
+            <label htmlFor="upi">UPI Payment</label>
+          </div>
+        </div>
+
+        {paymentMethod === "upi" && (
+          <div className="upi-options">
+            <div className="upi-option">
+              <input
+                type="radio"
+                id="google-pay"
+                name="upi"
+                value="google-pay"
+                checked={selectedUPI === 'google-pay'}
+                onChange={(e) => handleUPISelection(e.target.value)}
+              />
+              <label htmlFor="google-pay">Google Pay</label>
+            </div>
+            
+            <div className="upi-option">
+              <input
+                type="radio"
+                id="phonepe"
+                name="upi"
+                value="phonepe"
+                checked={selectedUPI === 'phonepe'}
+                onChange={(e) => handleUPISelection(e.target.value)}
+              />
+              <label htmlFor="phonepe">PhonePe</label>
+            </div>
+            
+            <div className="upi-option">
+              <input
+                type="radio"
+                id="paytm"
+                name="upi"
+                value="paytm"
+                checked={selectedUPI === 'paytm'}
+                onChange={(e) => handleUPISelection(e.target.value)}
+              />
+              <label htmlFor="paytm">Paytm</label>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="order-page-container">
@@ -430,93 +552,34 @@ const PlaceOrder = () => {
                 </div>
               </div>
 
-              <div className="payment-section">
-                <h3>Payment Method</h3>
-                <div className="payment-options">
-                  <div className="payment-option active">
-                    <input
-                      type="radio"
-                      id="card"
-                      name="payment"
-                      checked
-                      readOnly
-                    />
-                    <label htmlFor="card">Credit Card</label>
-                    <div className="payment-icons">
-                      <svg
-                        viewBox="0 0 38 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        role="img"
-                        width="38"
-                        height="24"
-                        aria-labelledby="pi-visa"
-                      >
-                        <title id="pi-visa">Visa</title>
-                        <path
-                          opacity=".07"
-                          d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"
-                        ></path>
-                        <path
-                          fill="#fff"
-                          d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"
-                        ></path>
-                        <path
-                          d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-.7.6-1.4.6-1.4 0-2.5.1-3.4-.2-.1.2-.1.2-.2.1zm-3.5.3c.1-.7.1-.7.2-1 .5-2.2 1-4.5 1.4-6.7.1-.2.1-.3.3-.3H18c-.2 1.2-.4 2.1-.7 3.2-.3 1.5-.6 3-1 4.5 0 .2-.1.2-.3.2M5 8.2c0-.1.2-.2.3-.2h3.4c.5 0 .9.3 1 .8l.9 4.4c0 .1 0 .1.1.2 0-.1.1-.1.1-.1l2.1-5.1c-.1-.1 0-.2.1-.2h2.1c0 .1 0 .1-.1.2l-3.1 7.3c-.1.2-.1.3-.2.4-.1.1-.3 0-.5 0H9.7c-.1 0-.2 0-.2-.2L7.9 9.5c-.2-.2-.5-.5-.9-.6-.6-.3-1.7-.5-1.9-.5L5 8.2z"
-                          fill="#142688"
-                        ></path>
-                      </svg>
-                      <svg
-                        viewBox="0 0 38 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        role="img"
-                        width="38"
-                        height="24"
-                        aria-labelledby="pi-master"
-                      >
-                        <title id="pi-master">Mastercard</title>
-                        <path
-                          opacity=".07"
-                          d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"
-                        ></path>
-                        <path
-                          fill="#fff"
-                          d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"
-                        ></path>
-                        <circle fill="#EB001B" cx="15" cy="12" r="7"></circle>
-                        <circle fill="#F79E1B" cx="23" cy="12" r="7"></circle>
-                        <path
-                          fill="#FF5F00"
-                          d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.3-3 3.4-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"
-                        ></path>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <p className="secure-info">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect
-                      x="3"
-                      y="11"
-                      width="18"
-                      height="11"
-                      rx="2"
-                      ry="2"
-                    ></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                  </svg>
-                  Your payment information is processed securely.
-                </p>
-              </div>
+              <PaymentSection />
+
+              <p className="secure-info">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect
+                    x="3"
+                    y="11"
+                    width="18"
+                    height="11"
+                    rx="2"
+                    ry="2"
+                  ></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                {paymentMethod === "cod" 
+                  ? "Pay when you receive your order"
+                  : "Your payment will be processed securely"}
+              </p>
 
               <div className="form-actions">
                 <button
@@ -560,7 +623,7 @@ const PlaceOrder = () => {
                     </>
                   ) : (
                     <>
-                      Complete Order
+                      Place Order
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -593,7 +656,7 @@ const PlaceOrder = () => {
                     </div>
                     <div className="item-name">{item.name}</div>
                     <div className="item-price">
-                      ${(item.price * cartItems[item._id]).toFixed(2)}
+                      ₹{(item.price * cartItems[item._id]).toFixed(2)}
                     </div>
                   </div>
                 ))}
@@ -614,15 +677,15 @@ const PlaceOrder = () => {
               <div className="order-totals">
                 <div className="total-row">
                   <span>Subtotal</span>
-                  <span>${getTotalCartAmount().toFixed(2)}</span>
+                  <span>₹{getTotalCartAmount().toFixed(2)}</span>
                 </div>
                 <div className="total-row">
                   <span>Delivery Fee</span>
-                  <span>${(2).toFixed(2)}</span>
+                  <span>₹{(2).toFixed(2)}</span>
                 </div>
                 <div className="total-row grand-total">
                   <span>Total</span>
-                  <span>${(getTotalCartAmount() + 2).toFixed(2)}</span>
+                  <span>₹{(getTotalCartAmount() + 2).toFixed(2)}</span>
                 </div>
               </div>
 
